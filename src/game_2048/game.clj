@@ -1,53 +1,13 @@
-(ns game-2048.game)
+(ns game-2048.game
+  (:require   [game-2048.board :as board]
+              [game-2048.rows :as rows]
+              [game-2048.command :as command]))
 
-(defn move [coll]
-  (->> coll
-       (remove-zero)
-       (split-into-duplicate-tiles)
-       (mapv #(apply sum-left %))
-       (join-tiles)
-       (append-zero-right)))
+(defn game []
+  (let [game-map (board/create 4 4 0)
+        move-left (board/move game-map
+        command (command/get-command!)]
+    
+    
+   
 
-(defn transpose [game-map]
-  (apply mapv vector game-map))
-
-(defn reverse-map [game-map]
-  (mapv (comp vec reverse) game-map))
-
-(defn move-left [game-map]
-  (mapv move game-map))
-
-(defn move-right [game-map]
-  (->> game-map
-       (reverse-map)
-       (move-left)
-       (reverse-map)))
-
-(defn move-up [game-map]
-  (->> game-map
-       (transpose)
-       (move-left)
-       (transpose)))
-
-(defn move-down [game-map]
-  (->> game-map
-       (transpose)
-       (move-right)
-       (transpose)))
-
-(defn add-tile [position value game-map]
-  (assoc-in game-map position value))
-
-(defn make-index [[row col]]
-  (if (= col 3)
-    [(inc row) 0]
-    [row (inc col)]))
-
-(defn mix-two-vectors [c1 c2]
-  (mapv vector c1 c2))
-
-(defn get-zero-index [game-map]
-  (let [index (take 16 (iterate make-index [0 0]))]
-    (->> (mix-two-vectors (flatten game-map) index)
-         (filter #(= 0 (first %)))
-         (mapv second))))
