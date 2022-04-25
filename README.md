@@ -1,6 +1,15 @@
 
 ## Usage
 
+### deps
+
+Run game:
+ ``` 
+ $ clj -A:run 
+ ```
+
+### boot
+
 Run the project directly:
 
     $ boot run
