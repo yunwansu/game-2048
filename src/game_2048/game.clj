@@ -1,22 +1,5 @@
 (ns game-2048.game)
 
-(defn append-zero-right [coll]
-  (vec (concat coll (take (- 4 (count coll)) (repeat 0)))))
-
-(defn join-tiles [coll]
-  (flatten coll))
-
-(defn sum-left
-  ([x] [x])
-  ([x y] [(+ x y)])
-  ([x y & more] (vec (concat (sum-left x y) (apply sum-left more)))))
-
-(defn split-into-duplicate-tiles [coll]
-  (partition-by identity coll))
-
-(defn remove-zero [coll]
-  (filterv (comp not zero?) coll))
-
 (defn move [coll]
   (->> coll
        (remove-zero)
