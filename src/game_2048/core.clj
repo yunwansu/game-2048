@@ -1,6 +1,9 @@
 (ns game-2048.core
-  (:require [game-2048.rule :as rule])
+  (:require [game-2048.game :refer [run]]
+            [game-2048.gui.main :refer [draw]])
   (:gen-class))
 
 (defn -main [& args]
-  (rule/run))
+  (do
+    (draw)
+    (run)))
